@@ -1,0 +1,36 @@
+<launch>
+  <arg name="namespace" default="docker" />
+  <arg name="verbose" default="true" />
+  <arg name="model_type" default="swin" />
+  <arg name="enable_pubsub" default="true" />
+  <arg name="out_debug_img" default="true" />
+  <arg name="out_debug_segimg" default="false" />
+  <arg name="confidence_threshold" default="0.25" />
+  <arg name="input_image" default="/rgb/image_raw" />
+  <arg name="compressed" default="false" />
+  <arg name="device" default="auto" />
+  <arg name="vocabulary" default="lvis" />
+  <arg name="custom_vocabulary" default="" />
+  <arg name="output_highest" default="false" />
+  <arg name="use_jsk_msgs" default="true" />
+
+  <node name="docker_detic_segmentor" pkg="detic_ros" type="run_container.py" output="screen"
+    args="-host localhost -models $(find detic_ros)/models -mount $(find detic_ros)/launch -name seg.launch
+    namespace:=$(arg namespace)
+    verbose:=$(arg verbose)
+    model_type:=$(arg model_type)
+    enable_pubsub:=$(arg enable_pubsub)
+    out_debug_img:=$(arg out_debug_img)
+    out_debug_segimg:=$(arg out_debug_segimg)
+    confidence_threshold:=$(arg confidence_threshold)
+    input_image:=$(arg input_image)
+    compressed:=$(arg compressed)
+    device:=$(arg device)
+    vocabulary:=$(arg vocabulary)
+    custom_vocabulary:=$(arg custom_vocabulary)
+    output_highest:=$(arg output_highest)
+    use_jsk_msgs:=$(arg use_jsk_msgs)
+    ">
+</node>
+
+</launch>

@@ -1,0 +1,45 @@
+<launch>
+  <arg name="namespace" default="docker" />
+
+  <arg name="verbose" default="true" />
+  <arg name="model_type" default="swin" />
+  <arg name="enable_pubsub" default="true" />
+  <arg name="out_debug_img" default="true" />
+  <arg name="out_debug_segimg" default="true" />
+  <arg name="confidence_threshold" default="0.5" />
+  <arg name="input_image" default="input" />
+  <arg name="compressed" default="false" />
+  <arg name="device" default="auto" />
+  <arg name="vocabulary" default="lvis" />
+  <arg name="custom_vocabulary" default="" />
+  <arg name="output_highest" default="false" />
+  <arg name="use_jsk_msgs" default="true" />
+
+  <arg name="_input_image" default="/$(arg namespace)/decompressed_image" if="$(arg compressed)"/>
+  <arg name="_input_image" default="$(arg input_image)" unless="$(arg compressed)"/>
+
+  <group ns='$(arg namespace)'>
+
+    <include file="$(find detic_ros)/launch/decompress.launch" if="$(arg compressed)">
+      <arg name="in" value="$(arg input_image)"/>
+    </include>
+
+    <node name="detic_segmentor"
+          pkg="detic_ros" type="node.py"
+          output="screen" >
+    <remap from="~input_image" to="$(arg _input_image)"/>
+    <param name="verbose" value="$(arg verbose)"/>
+    <param name="model_type" value="$(arg model_type)" />
+    <param name="enable_pubsub" value="$(arg enable_pubsub)"/>
+    <param name="out_debug_img" value="$(arg out_debug_img)"/>
+    <param name="out_debug_segimg" value="$(arg out_debug_segimg)"/>
+    <param name="confidence_threshold" value="$(arg confidence_threshold)"/>
+    <param name="device" value="$(arg device)"/>
+    <param name="vocabulary" value="$(arg vocabulary)" />
+    <param name="custom_vocabulary" value="$(arg custom_vocabulary)" />
+    <param name="output_highest" value="$(arg output_highest)" />
+    <param name="use_jsk_msgs" value="$(arg use_jsk_msgs)"/>
+    </node>
+
+  </group>
+</launch>

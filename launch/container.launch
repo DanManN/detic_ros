@@ -19,7 +19,7 @@
   <arg name="_model_arg" default="" unless="$(eval bool(arg('model_dir')))"/>
 
   <node name="docker_detic_segmentor" pkg="detic_ros" type="run_container.py" output="screen"
-    args="-host localhost $(arg _model_arg) -mount $(find detic_ros)/launch -name seg.launch
+    args="-host $(optenv ROS_MASTER localhost) $(arg _model_arg) -mount $(find detic_ros)/launch -name seg.launch
     namespace:=$(arg namespace)
     verbose:=$(arg verbose)
     model_type:=$(arg model_type)

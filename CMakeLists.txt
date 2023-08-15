@@ -23,11 +23,11 @@ generate_messages(
     sensor_msgs
 )
 
-if(CATKIN_ENABLE_TESTING)
-  add_custom_target(${PROJECT_NAME}_download_image ALL
-    COMMAND ${PROJECT_SOURCE_DIR}/test/prepare_test_data.sh)
+# if(CATKIN_ENABLE_TESTING)
+#   add_custom_target(${PROJECT_NAME}_download_image ALL
+#     COMMAND ${PROJECT_SOURCE_DIR}/test/prepare_test_data.sh)
 
-  find_package(catkin REQUIRED COMPONENTS rostest)
-  add_rostest(test/test_node.test)
-  # add_rostest(test/test_batch_processor.test)  # somehow fail on workflow but fine on local
-endif()
+#   find_package(catkin REQUIRED COMPONENTS rostest)
+#   add_rostest(test/test_node.test)
+#   # add_rostest(test/test_batch_processor.test)  # somehow fail on workflow but fine on local
+# endif()

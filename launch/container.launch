@@ -13,9 +13,13 @@
   <arg name="custom_vocabulary" default="" />
   <arg name="output_highest" default="false" />
   <arg name="use_jsk_msgs" default="true" />
+  <arg name="model_dir" default="$(find detic_ros)/models" />
+
+  <arg name="_model_arg" default="-models $(arg model_dir)" if="$(eval bool(arg('model_dir')))"/>
+  <arg name="_model_arg" default="" unless="$(eval bool(arg('model_dir')))"/>
 
   <node name="docker_detic_segmentor" pkg="detic_ros" type="run_container.py" output="screen"
-    args="-host localhost -models $(find detic_ros)/models -mount $(find detic_ros)/launch -name seg.launch
+    args="-host localhost $(arg _model_arg) -mount $(find detic_ros)/launch -name seg.launch
     namespace:=$(arg namespace)
     verbose:=$(arg verbose)
     model_type:=$(arg model_type)

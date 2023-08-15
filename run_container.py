@@ -84,4 +84,5 @@ if __name__ == "__main__":
             launch_file_name=launch_file_name,
             launch_args=launch_args,
         )
+        print(docker_run_command)
         subprocess.call(docker_run_command, shell=True)
